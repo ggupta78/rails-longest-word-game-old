@@ -20,5 +20,13 @@ class GamesController < ApplicationController
     result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)
     # raise
     @valid_word = result['found'] == true
+
+    if @valid_word && session[:user_score]
+      @current_score = session[:user_score]
+      @current_score += 1
+    else
+      @current_score = 1
+    end
+    session[:user_score] = @current_score
   end
 end

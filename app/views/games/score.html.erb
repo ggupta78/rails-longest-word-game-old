@@ -1,1 +1,34 @@
-<%= @answer %>
+<div class="container">
+  <div class="row my-3">
+    <div class="col">
+      <h1 class="m-0">Result:</h1>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <% if @valid_answer %>
+        <% if @valid_word %>
+          <div class="alert alert-success" role="alert">
+            Congratulations! <strong><%= @answer %></strong> is a valid english word!
+          </div>
+        <% else %>
+          <div class="alert alert-warning" role="alert">
+            Sorry, <strong><%= @answer %></strong> is <strong>Not</strong> a valid english word!
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-danger" role="alert">
+          Your answer - <strong><%= @answer %></strong> is not using the letters in <%= @letters.split('').join(', ') %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= link_to "Play again", new_path %>
+    </div>
+  </div>
+
+</div>

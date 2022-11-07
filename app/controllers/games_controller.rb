@@ -1,3 +1,7 @@
+require 'uri'
+require 'net/http'
+require 'json'
+
 class GamesController < ApplicationController
   def new
     @letters = ('a'..'z').to_a.sample(10)
@@ -7,9 +11,14 @@ class GamesController < ApplicationController
     @answer = params[:answer]
     @letters = params[:letters]
 
-    @valid_answer = true
-    @answer.split('').each do |letter|
-      # if @letter.include? letter
-    end
+    @valid_answer = @answer.split('').all? { |letter| @letters.include?(letter) }
+
+    return unless @valid_answer
+
+    uri = URI("https://wagon-dictionary.herokuapp.com/#{@answer}")
+    res = Net::HTTP.get_response(uri)
+    result = JSON.parse(res.body) if res.is_a?(Net::HTTPSuccess)
+    # raise
+    @valid_word = result['found'] == true
   end
 end

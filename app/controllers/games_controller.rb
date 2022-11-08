@@ -11,7 +11,8 @@ class GamesController < ApplicationController
     @answer = params[:answer]
     @letters = params[:letters]
 
-    @valid_answer = @answer.split('').all? { |letter| @letters.include?(letter) }
+    # @valid_answer = @answer.split('').all? { |letter| @letters.include?(letter) }
+    @valid_answer = @answer.chars.all? { |letter| answer.count(letter) <= letters.count(letter) }
 
     return unless @valid_answer
 
